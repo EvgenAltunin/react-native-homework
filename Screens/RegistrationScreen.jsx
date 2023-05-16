@@ -45,7 +45,11 @@ export default function LoginScreen() {
               height: isKeybordShow ? 680 : 490,
             }}
           >
-            <View style={styles.avatar}>
+            <View style={styles.avatarWrapper}>
+              <Image
+                style={styles.addAvatarImg}
+                source={require("../assets/images/avatar.jpg")}
+              ></Image>
               <TouchableOpacity style={styles.addAvatarBtn}>
                 <Image
                   style={styles.addAvatarImg}
@@ -142,7 +146,7 @@ const styles = StyleSheet.create({
     lineHeight: 35,
     textAlign: "center",
   },
-  avatar: {
+  avatarWrapper: {
     position: "absolute",
     left: "50%",
     transform: [{ translateX: -45 }],
@@ -155,10 +159,15 @@ const styles = StyleSheet.create({
 
   addAvatarBtn: {
     position: "absolute",
-    right: -12,
+    left: 107,
     top: 80,
+
+    height: 120,
+    width: 120,
   },
-  addAvatarImg: {},
+  addAvatarImg: {
+    borderRadius: 16,
+  },
   input: {
     borderBottomWidth: 1,
     borderStyle: "solid",

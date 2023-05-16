@@ -47,10 +47,10 @@ export default function LoginScreen() {
           >
             <View style={styles.avatarWrapper}>
               <Image
-                style={styles.addAvatarImg}
+                style={styles.avatarImg}
                 source={require("../assets/images/avatar.jpg")}
               ></Image>
-              <TouchableOpacity style={styles.addAvatarBtn}>
+              <TouchableOpacity style={styles.addAvatarBtn} activeOpacity={0.7}>
                 <Image
                   style={styles.addAvatarImg}
                   source={require("../assets/images/add.png")}
@@ -102,7 +102,10 @@ export default function LoginScreen() {
                 >
                   <Text style={styles.submitBtnText}>REGISTER</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.registerBtn}>
+                <TouchableOpacity
+                  style={styles.registerBtn}
+                  activeOpacity={0.7}
+                >
                   <Text style={styles.registerBtnText}>
                     Already have an account? <Text>Log in</Text>
                   </Text>
@@ -157,17 +160,18 @@ const styles = StyleSheet.create({
     borderRadius: 16,
   },
 
-  addAvatarBtn: {
-    position: "absolute",
-    left: 107,
-    top: 80,
-
+  avatarImg: {
     height: 120,
     width: 120,
-  },
-  addAvatarImg: {
     borderRadius: 16,
   },
+
+  addAvatarBtn: {
+    position: "absolute",
+    right: -12,
+    top: 80,
+  },
+
   input: {
     borderBottomWidth: 1,
     borderStyle: "solid",

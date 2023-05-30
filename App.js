@@ -1,26 +1,55 @@
 import { useFonts } from "expo-font";
 import "react-native-gesture-handler";
 import React from "react";
-import { StyleSheet } from "react-native";
-import LoginScreen from "./Screens/LoginScreen";
-import RegistrationScreen from "./Screens/RegistrationScreen";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import Home from "./Screens/main/Home";
+import LoginScreen from "./Screens/auth/LoginScreen";
+import RegistrationScreen from "./Screens/auth/RegistrationScreen";
+import CreatePostsScreen from "./Screens/main/CreatePostsScreen";
+// import { useRoute } from "./router";
+
 
 export default function App() {
   const [fontsLoaded] = useFonts({
-    "RobotoRegular": require("./assets/fonts/Roboto-Regular.ttf"),
-    "RobotoMedium": require("./assets/fonts/Roboto-Medium.ttf"),
+    RobotoRegular: require("./assets/fonts/Roboto-Regular.ttf"),
+    RobotoMedium: require("./assets/fonts/Roboto-Medium.ttf"),
+    RobotoBold: require("./assets/fonts/Roboto-Bold.ttf"),
   });
 
   if (!fontsLoaded) {
     return null;
   }
 
+  // const routing = useRoute(true)
+  const AuthStack = createStackNavigator();
+
   return (
     <>
-      <LoginScreen />
-      {/* <RegistrationScreen/> */}
+      <NavigationContainer>
+        {/* {routing} */}
+        <AuthStack.Navigator initialRouteName="Login">
+          <AuthStack.Screen
+            name="Login"
+            component={LoginScreen}
+            options={{ headerShown: false }}
+          />
+          <AuthStack.Screen
+            name="Registration"
+            component={RegistrationScreen}
+            options={{ headerShown: false }}
+          />
+          <AuthStack.Screen
+            name="Create post"
+            component={CreatePostsScreen}
+          />
+          <AuthStack.Screen
+            name="Home"
+            component={Home}
+            options={{ headerShown: false }}
+          />
+        </AuthStack.Navigator>
+      </NavigationContainer>
     </>
   );
 }
-
-const styles = StyleSheet.create({});

@@ -11,13 +11,16 @@ import {
   Keyboard,
   Image,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
-export default function LoginScreen() {
+export default function RegistrationScreen() {
   const [isKeybordShow, setIsKeybordShow] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [isPasswordHide, setIsPasswordHide] = useState(true);
+
+  const navigation = useNavigation();
 
   const onKeybordHide = () => {
     setIsKeybordShow(false);
@@ -25,9 +28,9 @@ export default function LoginScreen() {
   };
 
   const onSubmit = () => {
+    console.log({ name, email, password });    
     setIsKeybordShow(false);
     Keyboard.dismiss();
-    console.log({ name, email, password });
     setName("");
     setEmail("");
     setPassword("");
@@ -37,7 +40,7 @@ export default function LoginScreen() {
       <View style={styles.container}>
         <ImageBackground
           style={styles.image}
-          source={require("../assets/images/background.jpg")}
+          source={require("../../assets/images/background.jpg")}
         >
           <View
             style={{
@@ -48,12 +51,12 @@ export default function LoginScreen() {
             <View style={styles.avatarWrapper}>
               <Image
                 style={styles.avatarImg}
-                source={require("../assets/images/avatar.jpg")}
+                source={require("../../assets/images/avatar.jpg")}
               ></Image>
               <TouchableOpacity style={styles.addAvatarBtn} activeOpacity={0.7}>
                 <Image
                   style={styles.addAvatarImg}
-                  source={require("../assets/images/add.png")}
+                  source={require("../../assets/images/add.png")}
                 ></Image>
               </TouchableOpacity>
             </View>
@@ -98,7 +101,10 @@ export default function LoginScreen() {
                 <TouchableOpacity
                   activeOpacity={0.7}
                   style={styles.submitBtn}
-                  onPress={onSubmit}
+                  onPress={() => {
+                    onSubmit();
+                    navigation.navigate("Home");
+                  }}
                 >
                   <Text style={styles.submitBtnText}>REGISTER</Text>
                 </TouchableOpacity>
@@ -106,8 +112,12 @@ export default function LoginScreen() {
                   style={styles.registerBtn}
                   activeOpacity={0.7}
                 >
-                  <Text style={styles.registerBtnText}>
-                    Already have an account? <Text>Log in</Text>
+                  <Text
+                    style={styles.registerBtnText}
+                    onPress={() => navigation.navigate("Login")}
+                  >
+                    Already have an account?{" "}
+                    <Text style={{ color: "#FF6C00" }}>Log in</Text>
                   </Text>
                 </TouchableOpacity>
               </KeyboardAvoidingView>

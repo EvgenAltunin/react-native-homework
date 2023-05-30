@@ -10,6 +10,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 export default function LoginScreen() {
   const [isKeybordShow, setIsKeybordShow] = useState(false);
@@ -17,15 +18,17 @@ export default function LoginScreen() {
   const [password, setPassword] = useState("");
   const [isPasswordHide, setIsPasswordHide] = useState(true);
 
+  const navigation = useNavigation();
+
   const onKeybordHide = () => {
     setIsKeybordShow(false);
     Keyboard.dismiss();
   };
 
   const onSubmit = () => {
+    console.log({ email, password });
     setIsKeybordShow(false);
     Keyboard.dismiss();
-    console.log({ email, password });
     setEmail("");
     setPassword("");
   };
@@ -34,7 +37,7 @@ export default function LoginScreen() {
       <View style={styles.container}>
         <ImageBackground
           style={styles.image}
-          source={require("../assets/images/background.jpg")}
+          source={require("../../assets/images/background.jpg")}
         >
           <View
             style={{
@@ -76,13 +79,20 @@ export default function LoginScreen() {
                 <TouchableOpacity
                   activeOpacity={0.7}
                   style={styles.submitBtn}
-                  onPress={onSubmit}
+                  onPress={() => {
+                    onSubmit();
+                    navigation.navigate("Home");
+                  }}
                 >
                   <Text style={styles.submitBtnText}>LOG IN</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.registerBtn}>
+                <TouchableOpacity
+                  style={styles.registerBtn}
+                  onPress={() => navigation.navigate("Registration")}
+                >
                   <Text style={styles.registerBtnText}>
-                    Don't have an account? <Text>Register</Text>
+                    Don't have an account?{" "}
+                    <Text style={{ color: "#FF6C00" }}>Register</Text>
                   </Text>
                 </TouchableOpacity>
               </KeyboardAvoidingView>

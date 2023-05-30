@@ -106,7 +106,7 @@ export default function PostsScreen() {
                   </TouchableOpacity>
                   <TouchableOpacity style={styles.postTool}>
                     <Feather name="map-pin" size={24} color="#BDBDBD" />
-                    <Text style={{...styles.postToolLabel, color: '#212121'}}>{item.country}</Text>
+                    <Text style={{...styles.postToolLabel, color: '#212121', textDecorationLine:'underline'}}>{item.country}</Text>
                   </TouchableOpacity>
                 </View>
               </View>

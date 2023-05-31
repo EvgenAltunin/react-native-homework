@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
-import { PostsList } from "../../components/PostsList/PostsList";
+import { PostsListProfile } from "../../components/PostsList/PostsListProfile";
 
 export default function ProfileScreen() {
   const [name, setName] = useState("Natali Romanova");
@@ -46,7 +46,7 @@ export default function ProfileScreen() {
             </TouchableOpacity>
           </View>
           <View style={styles.postsContainer}>
-            <PostsList />
+            <PostsListProfile />
           </View>
         </View>
       </ImageBackground>

@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
-import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome, Feather } from "@expo/vector-icons";
 import {
   Text,
   View,
   TouchableOpacity,
   StyleSheet,
   KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Keyboard,
   TextInput,
 } from "react-native";
 import { Camera } from "expo-camera";
@@ -17,8 +19,8 @@ export default function CreatePostsScreen() {
   const [type, setType] = useState(Camera.Constants.Type.back);
 
   const [isKeybordShow, setIsKeybordShow] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [placeName, setPlaceName] = useState("");
+  const [location, setLocation] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -42,76 +44,84 @@ export default function CreatePostsScreen() {
   };
 
   const onSubmit = () => {
-    console.log({ email, password });
+    console.log({ placeName, location });
     setIsKeybordShow(false);
     Keyboard.dismiss();
-    setEmail("");
-    setPassword("");
+    setPlaceName("");
+    setLocation("");
   };
 
   return (
-    <View style={styles.container}>
-      <View style={{ borderRadius: 8, overflow: "hidden" }}>
-        <Camera style={styles.camera} type={type} ref={setCameraRef}>
-          <View style={styles.photoView}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={async () => {
-                if (cameraRef) {
-                  const { uri } = await cameraRef.takePictureAsync();
-                  await MediaLibrary.createAssetAsync(uri);
-                }
-              }}
+    <TouchableWithoutFeedback onPress={onKeybordHide}>
+      <View style={styles.container}>
+        <View style={{ borderRadius: 8, overflow: "hidden" }}>
+          <Camera style={styles.camera} type={type} ref={setCameraRef}>
+            <View style={styles.photoView}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={async () => {
+                  if (cameraRef) {
+                    const { uri } = await cameraRef.takePictureAsync();
+                    await MediaLibrary.createAssetAsync(uri);
+                  }
+                }}
+              >
+                <FontAwesome name="camera" size={24} color="white" />
+              </TouchableOpacity>
+            </View>
+          </Camera>
+        </View>
+        <TouchableOpacity style={styles.editPhotoBtn}>
+          <Text style={styles.editPhotoBtnText}>Edit photo</Text>
+        </TouchableOpacity>
+        <View
+          style={{
+            ...styles.formContainer,
+            height: isKeybordShow ? 670 : 490,
+          }}
+        >
+          <View style={styles.form}>
+            <KeyboardAvoidingView
+              behavior={Platform.OS == "ios" ? "padding" : "height"}
             >
-              <FontAwesome name="camera" size={24} color="white" />
-            </TouchableOpacity>
-          </View>
-        </Camera>
-      </View>
-      <TouchableOpacity>
-        <Text>Edit photo</Text>
-      </TouchableOpacity>
-      <View
-        style={{
-          ...styles.formContainer,
-          height: isKeybordShow ? 670 : 490,
-        }}
-      >
-        <View style={styles.form}>
-          <KeyboardAvoidingView
-            behavior={Platform.OS == "ios" ? "padding" : "height"}
-          >
-            <TextInput
-              style={styles.input}
-              placeholder="example@mail.com"
-              value={email}
-              onChangeText={setEmail}
-              onFocus={() => setIsKeybordShow(true)}
-            ></TextInput>
-            <View style={{ position: "relative" }}>
               <TextInput
-                style={{ ...styles.input, marginTop: 16, paddingRight: 65 }}
-                placeholder="••••••••••••"
-                value={password}
-                onChangeText={setPassword}
+                style={styles.input}
+                placeholder="Place name..."
+                value={placeName}
+                onChangeText={setPlaceName}
                 onFocus={() => setIsKeybordShow(true)}
               ></TextInput>
-            </View>
+              <View style={{ position: "relative" }}>
+                <TextInput
+                  style={{ ...styles.input, paddingLeft: 32 }}
+                  placeholder="Location..."
+                  value={location}
+                  onChangeText={setLocation}
+                  onFocus={() => setIsKeybordShow(true)}
+                ></TextInput>
+                <Feather
+                  style={styles.inputIcon}
+                  name="map-pin"
+                  size={24}
+                  color="#BDBDBD"
+                />
+              </View>
 
-            <TouchableOpacity
-              activeOpacity={0.7}
-              style={styles.submitBtn}
-              onPress={() => {
-                onSubmit();
-                navigation.navigate("Home");
-              }}
-            >
-              <Text style={styles.submitBtnText}>LOG IN</Text>
-            </TouchableOpacity>
-          </KeyboardAvoidingView>
+              <TouchableOpacity
+                activeOpacity={0.7}
+                style={styles.submitBtn}
+                onPress={() => {
+                  onSubmit();
+                  // navigation.navigate("Home");
+                }}
+              >
+                <Text style={styles.submitBtnText}>PUBLISH</Text>
+              </TouchableOpacity>
+            </KeyboardAvoidingView>
+          </View>
         </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -159,8 +169,8 @@ const styles = StyleSheet.create({
   },
 
   submitBtn: {
-    height: 43,
-    marginTop: 43,
+    height: 51,
+    marginTop: 32,
     fontFamily: "RobotoRegular",
     fontSize: 16,
     lineHeight: 19,
@@ -175,5 +185,33 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 19,
     color: "#ffff",
+  },
+
+  editPhotoBtn: {
+    marginTop: 8,
+  },
+  editPhotoBtnText: {
+    fontFamily: "RobotoRegular",
+    fontSize: 16,
+    lineHeight: 19,
+    color: "#BDBDBD",
+  },
+
+  form: {
+    marginTop: 32,
+  },
+
+  input: {
+    height: 50,
+    fontFamily: "RobotoMedium",
+    fontSize: 16,
+    lineHeight: 19,
+    color: "#212121",
+    borderBottomWidth: 1,
+    borderBottomColor: "#E8E8E8",
+  },
+  inputIcon: {
+    position: 'absolute',
+    top: '27%',
   },
 });

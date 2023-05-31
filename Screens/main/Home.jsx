@@ -1,5 +1,6 @@
 import { TouchableOpacity, View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { useNavigation } from "@react-navigation/native";
 // icons
 import { Feather } from "@expo/vector-icons";
 
@@ -10,6 +11,8 @@ import ProfileScreen from "./ProfileScreen";
 const MainTab = createBottomTabNavigator();
 
 export default function Home() {
+  const navigation = useNavigation();
+
   return (
     <MainTab.Navigator
       screenOptions={{
@@ -39,7 +42,12 @@ export default function Home() {
             <Feather name="grid" size={size} color={color} />
           ),
           headerRight: () => (
-            <TouchableOpacity style={{ paddingRight: 16 }}>
+            <TouchableOpacity
+              style={{ paddingRight: 16 }}
+              onPress={() => {
+                navigation.navigate("Login");
+              }}
+            >
               <Feather name="log-out" size={24} color="#BDBDBD" />
             </TouchableOpacity>
           ),
@@ -47,7 +55,7 @@ export default function Home() {
         }}
       />
       <MainTab.Screen
-        name="Create"
+        name="Create post"
         component={CreatePostsScreen}
         options={{
           tabBarIcon: ({ focused, size, color }) => (

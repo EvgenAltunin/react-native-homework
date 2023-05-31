@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useNavigation } from "@react-navigation/native";
+
 import { FontAwesome, Feather } from "@expo/vector-icons";
 import {
   Text,
@@ -21,6 +23,8 @@ export default function CreatePostsScreen() {
   const [isKeybordShow, setIsKeybordShow] = useState(false);
   const [placeName, setPlaceName] = useState("");
   const [location, setLocation] = useState("");
+
+  const navigation = useNavigation();
 
   useEffect(() => {
     (async () => {
@@ -99,12 +103,14 @@ export default function CreatePostsScreen() {
                   onChangeText={setLocation}
                   onFocus={() => setIsKeybordShow(true)}
                 ></TextInput>
-                <Feather
-                  style={styles.inputIcon}
-                  name="map-pin"
-                  size={24}
-                  color="#BDBDBD"
-                />
+                <TouchableOpacity
+                  style={{ position: "absolute", top: "27%" }}
+                  onPress={() => {
+                    navigation.navigate("Map");
+                  }}
+                >
+                  <Feather name="map-pin" size={24} color="#BDBDBD" />
+                </TouchableOpacity>
               </View>
 
               <TouchableOpacity
@@ -209,9 +215,5 @@ const styles = StyleSheet.create({
     color: "#212121",
     borderBottomWidth: 1,
     borderBottomColor: "#E8E8E8",
-  },
-  inputIcon: {
-    position: 'absolute',
-    top: '27%',
   },
 });

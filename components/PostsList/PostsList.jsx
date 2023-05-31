@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+
 import {
   StyleSheet,
   View,
@@ -14,6 +16,8 @@ import { POSTS } from "../../posts";
 
 export function PostsList() {
   const [posts, setPosts] = useState(POSTS);
+
+  const navigation = useNavigation();
 
   return (
     <SafeAreaView>
@@ -32,13 +36,23 @@ export function PostsList() {
               </View>
               <Text style={styles.postTitle}>{item.title}</Text>
               <View style={styles.postTools}>
-                <TouchableOpacity style={styles.postTool}>
+                <TouchableOpacity
+                  style={styles.postTool}
+                  onPress={() => {
+                    navigation.navigate("Coments");
+                  }}
+                >
                   <View style={{ transform: [{ scaleX: -1 }] }}>
                     <Feather name="message-circle" size={24} color="#BDBDBD" />
                   </View>
                   <Text style={styles.postToolLabel}>{item.comments}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.postTool}>
+                <TouchableOpacity
+                  style={styles.postTool}
+                  onPress={() => {
+                    navigation.navigate("Map");
+                  }}
+                >
                   <Feather name="map-pin" size={24} color="#BDBDBD" />
                   <Text
                     style={{

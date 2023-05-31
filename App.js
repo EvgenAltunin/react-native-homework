@@ -7,6 +7,8 @@ import Home from "./Screens/main/Home";
 import LoginScreen from "./Screens/auth/LoginScreen";
 import RegistrationScreen from "./Screens/auth/RegistrationScreen";
 import CreatePostsScreen from "./Screens/main/CreatePostsScreen";
+import ComentsScreen from "./Screens/main/CommentsScreen";
+import MapScreen from "./Screens/main/MapScreen";
 // import { useRoute } from "./router";
 
 
@@ -39,14 +41,22 @@ export default function App() {
             component={RegistrationScreen}
             options={{ headerShown: false }}
           />
-          <AuthStack.Screen
-            name="Create post"
-            component={CreatePostsScreen}
-          />
+          <AuthStack.Screen name="Create post" component={CreatePostsScreen} />
           <AuthStack.Screen
             name="Home"
             component={Home}
             options={{ headerShown: false }}
+          />
+
+          <AuthStack.Screen
+            name="Coments"
+            component={ComentsScreen}
+            options={{}}
+          />
+          <AuthStack.Screen
+            name="Map"
+            component={MapScreen}
+            options={{}}
           />
         </AuthStack.Navigator>
       </NavigationContainer>

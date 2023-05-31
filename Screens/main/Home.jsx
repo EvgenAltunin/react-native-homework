@@ -83,6 +83,7 @@ export default function Home() {
             <Feather name="user" size={size} color={color} />
           ),
           tabBarShowLabel: false,
+          headerShown: false,
         }}
       />
     </MainTab.Navigator>

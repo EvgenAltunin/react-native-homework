@@ -17,6 +17,7 @@ export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isPasswordHide, setIsPasswordHide] = useState(true);
+  const [focusedInput, setFocusedInput] = useState(null)
 
   const navigation = useNavigation();
 
@@ -51,20 +52,41 @@ export default function LoginScreen() {
                 behavior={Platform.OS == "ios" ? "padding" : "height"}
               >
                 <TextInput
-                  style={styles.input}
+                  style={{
+                    ...styles.input,
+                    borderColor:
+                      focusedInput === "email" ? "#FF6C00" : "#E8E8E8",
+                  }}
                   placeholder="example@mail.com"
                   value={email}
                   onChangeText={setEmail}
-                  onFocus={() => setIsKeybordShow(true)}
+                  onFocus={() => {
+                    setIsKeybordShow(true), setFocusedInput("email");
+                  }}
+                  onBlur={() => {
+                    setFocusedInput(null);
+                  }}
                 ></TextInput>
                 <View style={{ position: "relative" }}>
                   <TextInput
-                    style={{ ...styles.input, marginTop: 16, paddingRight: 65 }}
+                    style={{
+                      ...styles.input,
+                      position: "relative",
+                      marginTop: 16,
+                      paddingRight: 65,
+                      borderColor:
+                        focusedInput === "password" ? "#FF6C00" : "#E8E8E8",
+                    }}
                     placeholder="••••••••••••"
                     value={password}
                     onChangeText={setPassword}
                     secureTextEntry={isPasswordHide}
-                    onFocus={() => setIsKeybordShow(true)}
+                    onFocus={() => {
+                      setIsKeybordShow(true), setFocusedInput("password");
+                    }}
+                    onBlur={() => {
+                      setFocusedInput(null);
+                    }}
                   ></TextInput>
                   <TouchableOpacity
                     style={styles.passwordToggleBtn}
@@ -125,7 +147,6 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
   },
-  form: {},
   title: {
     marginVertical: 32,
     fontFamily: "RobotoMedium",
@@ -135,9 +156,8 @@ const styles = StyleSheet.create({
   },
 
   input: {
-    borderBottomWidth: 1,
+    borderWidth: 1,
     borderStyle: "solid",
-    borderBottomColor: "#ffff",
     borderRadius: 8,
     padding: 16,
     height: 50,

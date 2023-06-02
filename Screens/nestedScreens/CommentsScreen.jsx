@@ -11,10 +11,10 @@ import {
   Keyboard,
 } from "react-native";
 
-export default function MapScreen() {
+export default function CommentsScreen() {
   return (
     <View style={styles.container}>
-      <Text>MapScreen</Text>
+      <Text>ComentsScreen</Text>
     </View>
   );
 }

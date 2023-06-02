@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 // icons
 import { Feather } from "@expo/vector-icons";
 
-import PostsScreen from "./PostsScreen";
+import DefaultPostsScreen from "../nestedScreens/DefaultPostsScreen";
 import CreatePostsScreen from "./CreatePostsScreen";
 import ProfileScreen from "./ProfileScreen";
 
@@ -36,7 +36,7 @@ export default function Home() {
     >
       <MainTab.Screen
         name="Posts"
-        component={PostsScreen}
+        component={DefaultPostsScreen}
         options={{
           tabBarIcon: ({ focused, size, color }) => (
             <Feather name="grid" size={size} color={color} />

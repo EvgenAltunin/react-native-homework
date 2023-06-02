@@ -7,10 +7,9 @@ import Home from "./Screens/main/Home";
 import LoginScreen from "./Screens/auth/LoginScreen";
 import RegistrationScreen from "./Screens/auth/RegistrationScreen";
 import CreatePostsScreen from "./Screens/main/CreatePostsScreen";
-import ComentsScreen from "./Screens/main/CommentsScreen";
-import MapScreen from "./Screens/main/MapScreen";
+import CommentsScreen from "./Screens/nestedScreens/CommentsScreen";
+import MapScreen from "./Screens/nestedScreens/MapScreen";
 // import { useRoute } from "./router";
-
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -50,14 +49,10 @@ export default function App() {
 
           <AuthStack.Screen
             name="Coments"
-            component={ComentsScreen}
+            component={CommentsScreen}
             options={{}}
           />
-          <AuthStack.Screen
-            name="Map"
-            component={MapScreen}
-            options={{}}
-          />
+          <AuthStack.Screen name="Map" component={MapScreen} options={{}} />
         </AuthStack.Navigator>
       </NavigationContainer>
     </>

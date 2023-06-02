@@ -19,6 +19,7 @@ export default function RegistrationScreen() {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [isPasswordHide, setIsPasswordHide] = useState(true);
+  const [focusedInput, setFocusedInput] = useState(null);
 
   const navigation = useNavigation();
 
@@ -28,7 +29,7 @@ export default function RegistrationScreen() {
   };
 
   const onSubmit = () => {
-    console.log({ name, email, password });    
+    console.log({ name, email, password });
     setIsKeybordShow(false);
     Keyboard.dismiss();
     setName("");
@@ -39,7 +40,7 @@ export default function RegistrationScreen() {
     <TouchableWithoutFeedback onPress={onKeybordHide}>
       <View style={styles.container}>
         <ImageBackground
-          style={styles.image}
+          style={styles.bgImage}
           source={require("../../assets/images/background.jpg")}
         >
           <View
@@ -66,27 +67,57 @@ export default function RegistrationScreen() {
                 behavior={Platform.OS == "ios" ? "padding" : "height"}
               >
                 <TextInput
-                  style={styles.input}
+                  style={{
+                    ...styles.input,
+                    borderColor:
+                      focusedInput === "name" ? "#FF6C00" : "#E8E8E8",
+                  }}
                   placeholder="Name"
                   value={name}
                   onChangeText={setName}
-                  onFocus={() => setIsKeybordShow(true)}
+                  onFocus={() => {
+                    setIsKeybordShow(true), setFocusedInput("name");
+                  }}
+                  onBlur={() => {
+                    setFocusedInput(null);
+                  }}
                 ></TextInput>
                 <TextInput
-                  style={{ ...styles.input, marginTop: 16 }}
+                  style={{
+                    ...styles.input,
+                    borderColor:
+                      focusedInput === "email" ? "#FF6C00" : "#E8E8E8",
+                    marginTop: 16,
+                  }}
                   placeholder="example@mail.com"
                   value={email}
                   onChangeText={setEmail}
-                  onFocus={() => setIsKeybordShow(true)}
+                  onFocus={() => {
+                    setIsKeybordShow(true), setFocusedInput("email");
+                  }}
+                  onBlur={() => {
+                    setFocusedInput(null);
+                  }}
                 ></TextInput>
                 <View style={{ position: "relative" }}>
                   <TextInput
-                    style={{ ...styles.input, marginTop: 16, paddingRight: 65 }}
+                    style={{
+                      ...styles.input,
+                      borderColor:
+                        focusedInput === "password" ? "#FF6C00" : "#E8E8E8",
+                      marginTop: 16,
+                      paddingRight: 65,
+                    }}
                     placeholder="••••••••••••"
                     value={password}
                     onChangeText={setPassword}
                     secureTextEntry={isPasswordHide}
-                    onFocus={() => setIsKeybordShow(true)}
+                    onFocus={() => {
+                      setIsKeybordShow(true), setFocusedInput("password");
+                    }}
+                    onBlur={() => {
+                      setFocusedInput(null);
+                    }}
                   ></TextInput>
                   <TouchableOpacity
                     style={styles.passwordToggleBtn}
@@ -135,7 +166,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#eaeaea",
   },
 
-  image: {
+  bgImage: {
     flex: 1,
     resizeMode: "cover",
     justifyContent: "flex-end",
@@ -151,7 +182,6 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
   },
-  form: {},
   title: {
     marginBottom: 32,
     fontFamily: "RobotoMedium",
@@ -183,9 +213,8 @@ const styles = StyleSheet.create({
   },
 
   input: {
-    borderBottomWidth: 1,
+    borderWidth: 1,
     borderStyle: "solid",
-    borderBottomColor: "#ffff",
     borderRadius: 8,
     padding: 16,
     height: 50,
